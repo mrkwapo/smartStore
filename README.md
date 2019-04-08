@@ -1,0 +1,1 @@
+I will be building a simplified version of the tools needed to create a smart store, such as , the Marathon Clothing Store by Nipsey Hustle.
