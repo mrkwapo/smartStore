@@ -1,68 +1,3 @@
-I will be building a simplified version of the tools needed to create a smart store, such as , the Marathon Clothing Store by Nipsey Hustle.
-
-This project is ideal for helping a small business owner of a retail store inexpensively transition into a smart store.
-
-The following capabilities:
-
-1. Use Google Sheets to sync inventory data to store website
-2. Create Barcodes or QR Codes for merchandise
-3. Log and Track inventory on the google sheets using their mobile phone as a scanner
-4. Program QR codes to display or run data to inform users
- 
-****************************************************************************************************
-Phase one: Use Google sheets to sync inventory data to store website
-
-https://developers.google.com/sheets/api/quickstart/nodejs
-
-Step 1: Turn on the Google Sheets API
-
-Click this button to create a new Cloud Platform project and automatically enable the Google Sheets API:
-
-ENABLE THE GOOGLE SHEETS API
-
-In resulting dialog click DOWNLOAD CLIENT CONFIGURATION and save the file credentials.json to your working directory.
-
--When you click “ENABLE THE GOOGLE SHEETS API”,
-
-It will say:
-
-You're all set!
-
-You're ready to start developing!
-
-DOWNLOAD CLIENT CONFIGURATION
-
-Client ID
-yourClientIDWillBeHere.apps.googleusercontent.com
-
-
-Client Secret
-yourClientSecretWillBeHere
-
-
-(You can always manage your API credentials and usage later in the API Console.)
-
-
--Click on “DOWNLOAD CLIENT CONFIGURATION” to download the file credentials.json and upload to working directory
-
-Use this website to beautify the json code: https://jsonformatter.curiousconcept.com/
-Copy and paste beautiful json in credentials file and save file
-
-***************************************************************************************************
-
-Step 2: Install the client library
-
-Run the following commands to install the libraries using npm:
-
-Copy and paste this in the c9 terminal
-npm install googleapis@27 --save
-
-*****************************************************************************************************
-Step 3: Set up the sample
-Create a file named index.js in your working directory and copy in the following code:
-(you will be using the following code as a template):
-
-
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
@@ -132,40 +67,26 @@ function getNewToken(oAuth2Client, callback) {
 }
 
 /**
- * Prints the item name, size, quantity in, quantity out, how many left, and price in a sample spreadsheet:
- * @see https://docs.google.com/spreadsheets/d/YourGoogleSheetIDGoesHere/edit
+ * Prints the names and majors of students in a sample spreadsheet:
+ * @see https://docs.google.com/spreadsheets/d/1arm6iCoLBRjTr7bdWQeiMYMIenv7HfkGyc7DJtowbmc/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
 function listMajors(auth) {
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.get({
-    spreadsheetId: 'YourGoogleSheetIDGoesHere',
-    range: 'Class Data!A2:E',
+    spreadsheetId: '1arm6iCoLBRjTr7bdWQeiMYMIenv7HfkGyc7DJtowbmc',
+    range: 'A2:G',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
     if (rows.length) {
-      console.log('Name, Major:');
+      console.log('Product Category,Size, Product Code, Quantity In, Quantity Out, Quantity Left, Price:');
       // Print columns A and E, which correspond to indices 0 and 4.
       rows.map((row) => {
-        console.log(`${row[0]}, ${row[4]}`);
+        console.log(`${row[0]}, ${row[1]}, ${row[2]}, ${row[3]}, ${row[4]}, ${row[5]}, ${row[6]}, ${row[7]}`);
       });
     } else {
       console.log('No data found.');
     }
   });
 }
-
-Step 4: Run the sample
-Run the sample using the following command:
-node .
-The first time you run the sample, it will prompt you to authorize access:
-a.	Browse to the provided URL in your web browser.
-If you are not already logged into your Google account, you will be prompted to log in. If you are logged into multiple Google accounts, you will be asked to select one account to use for the authorization.
-b.	Click the Accept button.
-c.	Copy the code you're given, paste it into the command-line prompt, and press Enter.
-
-
-
-
-
