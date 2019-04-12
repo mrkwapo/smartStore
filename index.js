@@ -1,6 +1,6 @@
 const fs = require('fs');
 const readline = require('readline');
-const {google} = require('googleapis');
+const { google } = require('googleapis');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
@@ -23,9 +23,9 @@ fs.readFile('credentials.json', (err, content) => {
  * @param {function} callback The callback to call with the authorized client.
  */
 function authorize(credentials, callback) {
-  const {client_secret, client_id, redirect_uris} = credentials.installed;
+  const { client_secret, client_id, redirect_uris } = credentials.installed;
   const oAuth2Client = new google.auth.OAuth2(
-      client_id, client_secret, redirect_uris[0]);
+    client_id, client_secret, redirect_uris[0]);
 
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, (err, token) => {
@@ -67,25 +67,68 @@ function getNewToken(oAuth2Client, callback) {
 }
 
 /**
- * Prints the names and majors of students in a sample spreadsheet:
- * @see https://docs.google.com/spreadsheets/d/1arm6iCoLBRjTr7bdWQeiMYMIenv7HfkGyc7DJtowbmc/edit
+ * Prints the employee names, employee id, department id, and salary form a sample spreadsheet:
+ * @see https://docs.google.com/spreadsheets/d/1o5OwwhTgJduNRGvpgOGic1mmW9P1vKLzt1KgfMXm7BA/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
 function listMajors(auth) {
-  const sheets = google.sheets({version: 'v4', auth});
+  const sheets = google.sheets({ version: 'v4', auth });
   sheets.spreadsheets.values.get({
-    spreadsheetId: '1arm6iCoLBRjTr7bdWQeiMYMIenv7HfkGyc7DJtowbmc',
-    range: 'A2:G',
+    spreadsheetId: '1o5OwwhTgJduNRGvpgOGic1mmW9P1vKLzt1KgfMXm7BA',
+    range: 'A2:E7',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
     if (rows.length) {
-      console.log('Product Category,Size, Product Code, Quantity In, Quantity Out, Quantity Left, Price:');
-      // Print columns A and E, which correspond to indices 0 and 4.
+
       rows.map((row) => {
-        console.log(`${row[0]}, ${row[1]}, ${row[2]}, ${row[3]}, ${row[4]}, ${row[5]}, ${row[6]}, ${row[7]}`);
+
+        // const fs = require('fs');
+
+        let webPage = `<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="style.css" rel="stylesheet" />
+    <title> </title>
+  </head>
+  <body>
+  	<div id="wrapper">
+	    <header>
+	    	<div id="page-banner">
+	    	   <div class="headshot">
+	    	    <img src="images/employee.jpg">
+	    	   </div>
+
+          <h1 class="nameTitle">${row[0]} ${row[1]}</h1>
+          
+	    	</div>
+	    </header>
+	    <div id="employeeInfo">
+	    	<p>Employee ID: ${row[2]}</p>
+	    	<p>Department ID: ${row[3]}</p>
+	    	<p>Salary:$${row[4]}</p>
+	    </div>
+	    
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>`
+
+        // write to a new file using first nameandlastname.txt
+        fs.writeFile(row[0]+row[1] + '.html', webPage, (err) => {
+          // throws an error, you could also catch it here
+          if (err) throw err;
+
+          // success case, the file was saved
+          console.log('Webpage saved!');
+        });
+
+        //fs.writeFile code ended above        
+        console.log(`${row[0]}, ${row[2]}`);
       });
-    } else {
+    }
+    else {
       console.log('No data found.');
     }
   });

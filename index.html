@@ -1,0 +1,119 @@
+<!--gathering previously used code to make a mock store website that displays data from another document-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Felicia's Fruit Stand Template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+    <link href="https://fonts.googleapis.com/css?family=Srisakdi" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+    <style>
+    /*img {*/
+    /*    float: right;*/
+    /*}*/
+        #businessName {
+            font-family: 'Dancing Script', cursive;
+            font-size: 200%;
+        }
+
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: "Karma", sans-serif
+        }
+
+        .bar-block .bar-item {
+            padding: 20px
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top menu -->
+    <div class="top">
+        <div class="white xlarge" style="max-width:1200px;margin:auto">
+        <div id="businessName" class="center padding-16">Felicia's Fruit Stand</div>
+        <center><h2>Buy Felicia!!!</h2></center>
+        </div>
+    </div>
+
+    <!-- !PAGE CONTENT! -->
+    <div class="main content padding" style="max-width:1200px;margin-top:100px">
+
+        <!-- First Photo Grid-->
+        <div class="row-padding padding-16 center" id="food">
+            <div class="quarter">
+                <img src="images/apples.jpg" alt="Apples" style="width:100%">
+                <h3>Organic Red Apples</h3>
+                <p><strong>Price: </strong>$1.00 <em>each</em></p>
+
+            </div>
+            <div class="quarter">
+                <img src="images/bananas.jpg" alt="Bananas" style="width:100%">
+                <h3>Bananas</h3>
+                <p><strong>Price: </strong>$1.25 <em>each</em></p>
+            </div>
+            <div class="quarter">
+                <img src="images/grape.jpg" alt="Grapes" style="width:100%">
+                <h3>Seeded Grapes</h3>
+                <p><strong>Price: </strong>$1.50 <em>each</em></p>
+                
+            </div>
+            <div class="quarter">
+                <img src="images/orange.jpg" alt="Blood Red Oranges" style="width:100%">
+                <h3>Blood Ruby Red Oranges</h3>
+                <p><strong>Price: </strong>$1.75 <em>each</em></p>
+            </div>
+        </div>
+
+    <div>
+        <h2 id="businessName" class="center padding-16">Total Sales Report</h2>
+        <h3 class="center padding-16">The total sales for this week is: $<span id="companySalesTotal">0000000</span></h3>
+
+
+    </div>
+    
+
+      
+
+   
+
+    <script type="text/javascript">
+    
+
+    
+    
+        var salesobj = {
+                fruitNames: ["Apple", "Orange", "Pear", "Grape"],
+                fruitPrices: [1.00, 1.25, 1.50, 1.75],
+                fruitSales: [150, 125, 115, 110],
+                standSalesTotals: [150, 156.25, 172.5, 192.5],
+                
+                fruitSalesGrandTotal: function() {
+                    var standTotal = 0;
+                    for (var i = 0; i < this.standSalesTotals.length; i++) {
+                        standTotal += this.standSalesTotals[i];
+                    }    
+                    document.getElementById("companySalesTotal").innerText = standTotal;
+                }
+
+            };
+                salesobj.fruitSalesGrandTotal();
+    </script>
+
+</body>
+
+</html>
+
+
+<!--end of felicia's fruit stand code-->
+
+
